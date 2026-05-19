@@ -100,9 +100,17 @@ export default function Home() {
   };
 
   const handleCopy = async () => {
+    const scoreEmojiLine = results
+      .map((result) => {
+        if (result.points >= 750) return "🔴";
+        if (result.points >= 400) return "⚪";
+        return "⚫";
+      })
+      .join("");
+
     const lines = [
-      `UW–Madison Geo Quiz: ${totalScore}/5000`,
-      ...results.map((result, i) => `${i + 1}. ${result.answerLabel}: ${result.points}/1000 (${formatDistance(result.distanceMeters)})`),
+      `GeoBadger ${totalScore}/5000`,
+      scoreEmojiLine,
     ];
     await navigator.clipboard.writeText(lines.join("\n"));
     setCopied(true);
