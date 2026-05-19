@@ -4,10 +4,11 @@ import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from 
 import L from "leaflet";
 import { useEffect } from "react";
 
-const userMarkerIcon = L.icon({
-  iconUrl: "/bucky-marker.png",
-  iconSize: [48, 48],
-  iconAnchor: [24, 24],
+const userMarkerIcon = L.divIcon({
+  className: "custom-marker-wrapper",
+  html: '<div class="custom-marker custom-marker-user"><span>You</span></div>',
+  iconSize: [56, 56],
+  iconAnchor: [28, 28],
 });
 
 const answerMarkerIcon = L.divIcon({
@@ -17,14 +18,7 @@ const answerMarkerIcon = L.divIcon({
   iconAnchor: [32, 32],
 });
 
-type QuizMapProps = {
-  guess: { lat: number; lng: number } | null;
-  answer: { lat: number; lng: number } | null;
-  onGuess: (lat: number, lng: number) => void;
-  revealAnswer: boolean;
-};
-
-type LockedMapClickHandlerProps = {
+type MapClickHandlerProps = {
   onPick: (lat: number, lng: number) => void;
   revealAnswer: boolean;
 };
@@ -69,7 +63,7 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
   return (
     <MapContainer center={MADISON_CENTER} zoom={14} scrollWheelZoom style={{ height: "50vh", minHeight: 320, width: "100%" }}>
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <LockedMapClickHandler onPick={onGuess} revealAnswer={revealAnswer} />
+      <MapClickHandler onPick={onGuess} />
       {guess && <Marker position={[guess.lat, guess.lng]} icon={userMarkerIcon} />}
       {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} icon={answerMarkerIcon} />}
       {revealAnswer && guess && answer && (

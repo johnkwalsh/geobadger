@@ -129,7 +129,7 @@ export default function Home() {
     return (
       <main className="page">
         <section className="card">
-          <GeoBadgerTitle />
+          <h1>UW–Madison Geo Quiz</h1>
           <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
           <ul>
             {results.map((result, i) => (
