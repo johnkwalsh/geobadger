@@ -21,6 +21,22 @@ body {
   padding: 1rem;
 }
 
+.game-title {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.9rem, 5vw, 2.45rem);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+.game-title-geo {
+  color: #111111;
+}
+
+.game-title-badger {
+  color: #c5050c;
+  margin-left: 0.2rem;
+}
+
 .card {
   width: min(900px, 100%);
   background: #ffffff;

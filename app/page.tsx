@@ -50,6 +50,15 @@ function formatDistance(distanceMeters: number): string {
   return `${miles.toFixed(2)} mi`;
 }
 
+function GeoBadgerTitle() {
+  return (
+    <h1 className="game-title" aria-label="GeoBadger">
+      <span className="game-title-geo">GEO</span>
+      <span className="game-title-badger">BADGER</span>
+    </h1>
+  );
+}
+
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [guess, setGuess] = useState<Guess | null>(null);
@@ -142,7 +151,7 @@ export default function Home() {
   return (
     <main className="page">
       <section className="card">
-        <h1>UW–Madison Geo Quiz</h1>
+        <GeoBadgerTitle />
         <p>
           Question {index + 1} of {questions.length}
         </p>
