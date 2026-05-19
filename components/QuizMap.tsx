@@ -1,7 +1,6 @@
 "use client";
 
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
-import { Polyline, useMap } from "react-leaflet";
+import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { useEffect } from "react";
 
