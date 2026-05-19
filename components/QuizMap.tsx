@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleMarker, MapContainer, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import { useEffect } from "react";
 
@@ -55,30 +55,8 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
     <MapContainer center={MADISON_CENTER} zoom={14} scrollWheelZoom style={{ height: "50vh", minHeight: 320, width: "100%" }}>
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <MapClickHandler onPick={onGuess} />
-      {guess && (
-        <CircleMarker
-          center={[guess.lat, guess.lng]}
-          radius={11}
-          pathOptions={{
-            color: "#0f172a",
-            weight: 2,
-            fillColor: "#2563eb",
-            fillOpacity: 0.95,
-          }}
-        />
-      )}
-      {revealAnswer && answer && (
-        <CircleMarker
-          center={[answer.lat, answer.lng]}
-          radius={11}
-          pathOptions={{
-            color: "#14532d",
-            weight: 2,
-            fillColor: "#22c55e",
-            fillOpacity: 0.95,
-          }}
-        />
-      )}
+      {guess && <Marker position={[guess.lat, guess.lng]} />}
+      {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} />}
       {revealAnswer && guess && answer && (
         <>
           <Polyline
