@@ -50,6 +50,15 @@ function formatDistance(distanceMeters: number): string {
   return `${miles.toFixed(2)} mi`;
 }
 
+function GeoBadgerTitle() {
+  return (
+    <h1 className="game-title" aria-label="GeoBadger">
+      <span className="game-title-geo">GEO</span>
+      <span className="game-title-badger">BADGER</span>
+    </h1>
+  );
+}
+
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [guess, setGuess] = useState<Guess | null>(null);
@@ -100,9 +109,17 @@ export default function Home() {
   };
 
   const handleCopy = async () => {
+    const scoreEmojiLine = results
+      .map((result) => {
+        if (result.points >= 750) return "🔴";
+        if (result.points >= 400) return "⚪";
+        return "⚫";
+      })
+      .join("");
+
     const lines = [
-      `UW–Madison Geo Quiz: ${totalScore}/5000`,
-      ...results.map((result, i) => `${i + 1}. ${result.answerLabel}: ${result.points}/1000 (${formatDistance(result.distanceMeters)})`),
+      `GeoBadger ${totalScore}/5000`,
+      scoreEmojiLine,
     ];
     await navigator.clipboard.writeText(lines.join("\n"));
     setCopied(true);
@@ -112,8 +129,8 @@ export default function Home() {
     return (
       <main className="page">
         <section className="card">
-          <h1>UW–Madison Geo Quiz</h1>
-          <h2>Final Score: {totalScore} / 5000</h2>
+          <GeoBadgerTitle />
+          <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
@@ -134,7 +151,7 @@ export default function Home() {
   return (
     <main className="page">
       <section className="card">
-        <h1>UW–Madison Geo Quiz</h1>
+        <GeoBadgerTitle />
         <p>
           Question {index + 1} of {questions.length}
         </p>
