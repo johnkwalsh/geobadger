@@ -20,23 +20,18 @@ const answerMarkerIcon = L.divIcon({
 
 type MapClickHandlerProps = {
   onPick: (lat: number, lng: number) => void;
+  revealAnswer: boolean;
 };
 
-function MapClickHandler({ onPick }: MapClickHandlerProps) {
+function LockedMapClickHandler({ onPick, revealAnswer }: LockedMapClickHandlerProps) {
   useMapEvents({
     click(event) {
+      if (revealAnswer) return;
       onPick(event.latlng.lat, event.latlng.lng);
     },
   });
   return null;
 }
-
-type QuizMapProps = {
-  guess: { lat: number; lng: number } | null;
-  answer: { lat: number; lng: number } | null;
-  onGuess: (lat: number, lng: number) => void;
-  revealAnswer: boolean;
-};
 
 type FitToResultProps = {
   guess: { lat: number; lng: number };
