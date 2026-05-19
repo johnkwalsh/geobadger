@@ -13,21 +13,6 @@ body {
   color: #1f1f1f;
 }
 
-body::before {
-  content: "W W W W W W W W W W W W W W W W W W W W W W W W";
-  position: fixed;
-  inset: -15%;
-  color: rgba(255, 255, 255, 0.07);
-  font-size: clamp(2.2rem, 5.5vw, 4rem);
-  font-weight: 800;
-  letter-spacing: 2.2rem;
-  line-height: 2.6;
-  transform: rotate(-14deg);
-  pointer-events: none;
-  z-index: -1;
-  white-space: pre-wrap;
-}
-
 .page {
   min-height: 100vh;
   display: flex;
@@ -130,64 +115,9 @@ button:disabled {
 }
 
 .custom-marker-user {
-  position: relative;
-  background: #111111;
-  border: 3px solid #ffffff;
-  overflow: visible;
-}
-
-.bucky-ear {
-  position: absolute;
-  top: -8px;
-  width: 16px;
-  height: 16px;
-  background: #111111;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-}
-
-.bucky-ear-left { left: 8px; }
-.bucky-ear-right { right: 8px; }
-
-.bucky-face {
-  position: absolute;
-  inset: 7px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 68%, #ffffff 0 38%, transparent 39%), #111111;
-}
-
-.bucky-eye {
-  position: absolute;
-  top: 17px;
-  width: 6px;
-  height: 6px;
   background: #ffffff;
-  border-radius: 50%;
-}
-
-.bucky-eye-left { left: 13px; }
-.bucky-eye-right { right: 13px; }
-
-.bucky-nose {
-  position: absolute;
-  left: 50%;
-  top: 24px;
-  width: 8px;
-  height: 6px;
-  background: #111111;
-  border-radius: 50%;
-  transform: translateX(-50%);
-}
-
-.bucky-stripe {
-  position: absolute;
-  left: 50%;
-  top: 9px;
-  transform: translateX(-50%) rotate(7deg);
-  width: 8px;
-  height: 13px;
-  border-radius: 8px;
-  background: #c5050c;
+  border: 3px solid #c5050c;
+  color: #9b0000;
 }
 
 .custom-marker-answer {
