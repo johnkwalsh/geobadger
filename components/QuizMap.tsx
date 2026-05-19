@@ -1,6 +1,8 @@
 "use client";
 
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import L from "leaflet";
+import { useEffect } from "react";
 
 type MapClickHandlerProps = {
   onPick: (lat: number, lng: number) => void;
@@ -22,6 +24,30 @@ type QuizMapProps = {
   revealAnswer: boolean;
 };
 
+type FitToResultProps = {
+  guess: { lat: number; lng: number };
+  answer: { lat: number; lng: number };
+  revealAnswer: boolean;
+};
+
+function FitToResult({ guess, answer, revealAnswer }: FitToResultProps) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!revealAnswer) return;
+    const bounds = L.latLngBounds([
+      [guess.lat, guess.lng],
+      [answer.lat, answer.lng],
+    ]);
+    map.fitBounds(bounds, {
+      padding: [40, 40],
+      maxZoom: 17,
+    });
+  }, [answer.lat, answer.lng, guess.lat, guess.lng, map, revealAnswer]);
+
+  return null;
+}
+
 const MADISON_CENTER: [number, number] = [43.0731, -89.4012];
 
 export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMapProps) {
@@ -31,6 +57,22 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
       <MapClickHandler onPick={onGuess} />
       {guess && <Marker position={[guess.lat, guess.lng]} />}
       {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} />}
+      {revealAnswer && guess && answer && (
+        <>
+          <Polyline
+            positions={[
+              [guess.lat, guess.lng],
+              [answer.lat, answer.lng],
+            ]}
+            pathOptions={{
+              color: "#c5050c",
+              weight: 6,
+              opacity: 0.95,
+            }}
+          />
+          <FitToResult guess={guess} answer={answer} revealAnswer={revealAnswer} />
+        </>
+      )}
     </MapContainer>
   );
 }
