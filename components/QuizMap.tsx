@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const userMarkerIcon = L.divIcon({
   className: "custom-marker-wrapper",
-  html: '<div class="custom-marker custom-marker-user"></div>',
+  html: '<div class="custom-marker custom-marker-user"><span>You</span></div>',
   iconSize: [56, 56],
   iconAnchor: [28, 28],
 });
