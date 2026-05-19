@@ -4,18 +4,19 @@ import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from 
 import L from "leaflet";
 import { useEffect } from "react";
 
-type MapClickHandlerProps = {
-  onPick: (lat: number, lng: number) => void;
-};
+const userMarkerIcon = L.divIcon({
+  className: "custom-marker-wrapper",
+  html: '<div class="custom-marker custom-marker-user"></div>',
+  iconSize: [56, 56],
+  iconAnchor: [28, 28],
+});
 
-function MapClickHandler({ onPick }: MapClickHandlerProps) {
-  useMapEvents({
-    click(event) {
-      onPick(event.latlng.lat, event.latlng.lng);
-    },
-  });
-  return null;
-}
+const answerMarkerIcon = L.divIcon({
+  className: "custom-marker-wrapper",
+  html: '<div class="custom-marker custom-marker-answer"><span>Answer</span></div>',
+  iconSize: [64, 64],
+  iconAnchor: [32, 32],
+});
 
 type QuizMapProps = {
   guess: { lat: number; lng: number } | null;
@@ -23,6 +24,21 @@ type QuizMapProps = {
   onGuess: (lat: number, lng: number) => void;
   revealAnswer: boolean;
 };
+
+type LockedMapClickHandlerProps = {
+  onPick: (lat: number, lng: number) => void;
+  revealAnswer: boolean;
+};
+
+function LockedMapClickHandler({ onPick, revealAnswer }: LockedMapClickHandlerProps) {
+  useMapEvents({
+    click(event) {
+      if (revealAnswer) return;
+      onPick(event.latlng.lat, event.latlng.lng);
+    },
+  });
+  return null;
+}
 
 type FitToResultProps = {
   guess: { lat: number; lng: number };
@@ -54,9 +70,9 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
   return (
     <MapContainer center={MADISON_CENTER} zoom={14} scrollWheelZoom style={{ height: "50vh", minHeight: 320, width: "100%" }}>
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <MapClickHandler onPick={onGuess} />
-      {guess && <Marker position={[guess.lat, guess.lng]} />}
-      {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} />}
+      <LockedMapClickHandler onPick={onGuess} revealAnswer={revealAnswer} />
+      {guess && <Marker position={[guess.lat, guess.lng]} icon={userMarkerIcon} />}
+      {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} icon={answerMarkerIcon} />}
       {revealAnswer && guess && answer && (
         <>
           <Polyline
@@ -65,8 +81,8 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
               [answer.lat, answer.lng],
             ]}
             pathOptions={{
-              color: "#c5050c",
-              weight: 6,
+              color: "#9b0000",
+              weight: 7,
               opacity: 0.95,
             }}
           />
