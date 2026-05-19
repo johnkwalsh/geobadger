@@ -1,39 +1,32 @@
-export type QuizQuestion = {
-  prompt: string;
-  answerLabel: string;
-  lat: number;
-  lng: number;
-};
-
-export const questions: QuizQuestion[] = [
+[
   {
-    prompt: "Where is Bascom Hall?",
-    answerLabel: "Bascom Hall",
-    lat: 43.075197,
-    lng: -89.404245,
+    prompt: "Vitamin C was first isolated here.",
+    answerLabel: "UW Biochemistry Building",
+    lat: 43.0767,
+    lng: -89.4125
   },
   {
-    prompt: "Where is Memorial Union?",
-    answerLabel: "Memorial Union",
-    lat: 43.076179,
-    lng: -89.400882,
-  },
-  {
-    prompt: "Where is Camp Randall Stadium?",
+    prompt: "Barry Alvarez coached his first game as Wisconsin head coach here.",
     answerLabel: "Camp Randall Stadium",
-    lat: 43.069889,
-    lng: -89.412464,
+    lat: 43.0699,
+    lng: -89.4128
   },
   {
-    prompt: "Where is the Kohl Center?",
-    answerLabel: "Kohl Center",
-    lat: 43.069911,
-    lng: -89.396938,
+    prompt: "The Onion was founded by UW–Madison students here.",
+    answerLabel: "Memorial Union",
+    lat: 43.0769,
+    lng: -89.4003
   },
   {
-    prompt: "Where is Babcock Hall?",
-    answerLabel: "Babcock Hall",
-    lat: 43.076738,
-    lng: -89.423698,
+    prompt: "Students jump into this lake after major Badger victories.",
+    answerLabel: "Lake Mendota",
+    lat: 43.0997,
+    lng: -89.4218
   },
-];
+  {
+    prompt: "The famous UW tradition of rubbing Lincoln’s shoe for good luck happens here.",
+    answerLabel: "Abraham Lincoln Statue at Bascom Hill",
+    lat: 43.0755,
+    lng: -89.4041
+  }
+]
