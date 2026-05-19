@@ -113,7 +113,7 @@ export default function Home() {
       <main className="page">
         <section className="card">
           <h1>UW–Madison Geo Quiz</h1>
-          <h2>Final Score: {totalScore} / 5000</h2>
+          <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
