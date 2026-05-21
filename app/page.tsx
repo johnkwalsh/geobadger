@@ -128,8 +128,8 @@ export default function Home() {
   if (isComplete) {
     return (
       <main className="page">
-        <section className="card">
-          <h1>UW–Madison Geo Quiz</h1>
+        <section className="card final-card">
+          <h1 className="final-title">🎉 UW–Madison Geo Quiz Complete!</h1>
           <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
           <ul>
             {results.map((result, i) => (
@@ -152,7 +152,7 @@ export default function Home() {
     <main className="page">
       <section className="card">
         <GeoBadgerTitle />
-        <p>
+        <p className="question-count">
           Question {index + 1} of {questions.length}
         </p>
         <h2>{currentQuestion.prompt}</h2>
@@ -176,8 +176,10 @@ export default function Home() {
             <p>
               <strong>Your guess:</strong> {roundResult.guess.lat.toFixed(5)}, {roundResult.guess.lng.toFixed(5)}
             </p>
-            <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
-            <p><strong>Points:</strong> {roundResult.points} / 1000</p>
+            <div className="result-stats">
+              <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
+              <p><strong>Points:</strong> {roundResult.points} / 1000</p>
+            </div>
             <button onClick={handleNext}>Next question</button>
           </div>
         )}
