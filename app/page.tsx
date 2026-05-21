@@ -119,7 +119,6 @@ function GeoBadgerTitle() {
         <span className="game-title-geo">GEO</span>
         <span className="game-title-badger">BADGER</span>
       </h1>
-      <p className="gb-header-subtitle">UW Campus Edition</p>
     </header>
   );
 }
