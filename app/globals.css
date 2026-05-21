@@ -74,6 +74,26 @@ h2 {
   font-size: clamp(1.5rem, 4.5vw, 2rem);
   font-weight: 900;
   color: #9b0000;
+  text-align: center;
+}
+
+.final-score-panel {
+  background: #f7f7f7;
+  border: 2px solid #9b0000;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  text-align: center;
+  margin-bottom: 0.9rem;
+  animation: finalScoreReveal 420ms ease-out both;
+}
+
+.final-score-label {
+  margin: 0 0 0.35rem;
+  color: #9b0000;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
 }
 
 .actions {
@@ -169,6 +189,7 @@ button:disabled {
   background: #c5050c;
   border: 3px solid #ffffff;
   color: #ffffff;
+  animation: answerMarkerPulse 1.8s ease-in-out infinite;
 }
 
 .card ul {
@@ -187,14 +208,42 @@ button:disabled {
 }
 
 .final-score {
-  background: #f7f7f7;
-  border: 2px solid #9b0000;
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
-  font-size: clamp(1.2rem, 3.6vw, 1.6rem);
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 900;
   text-align: center;
   color: #c5050c;
+  line-height: 1.05;
+}
+
+.final-rating {
+  margin: 0.45rem 0 0;
+  color: #1f1f1f;
+  font-size: clamp(1rem, 3.6vw, 1.28rem);
+  font-weight: 800;
+}
+
+@keyframes finalScoreReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes answerMarkerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 4px 15px rgba(155, 0, 0, 0.35);
+  }
 }
 
 @media (max-width: 640px) {
