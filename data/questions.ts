@@ -64,17 +64,17 @@ export const questions: QuizQuestion[] = [
     ],
   },
   {
-    prompt: "Where was “On, Wisconsin!” first publicly performed in 1909?",
-    answerLabel: "Music Hall",
-    lat: 43.074222,
-    lng: -89.399778,
-    polygon: [
-      { lat: 43.07455, lng: -89.40018 },
-      { lat: 43.07455, lng: -89.39942 },
-      { lat: 43.07390, lng: -89.39942 },
-      { lat: 43.07390, lng: -89.40018 },
-    ],
-  },
+  prompt: "Where was “On, Wisconsin!” first publicly performed in 1909?",
+  answerLabel: "Music Hall",
+  lat: 43.074647743718074,
+  lng: -89.4013518292858,
+  polygon: [
+    { lat: 43.07492, lng: -89.40178 },
+    { lat: 43.07492, lng: -89.40095 },
+    { lat: 43.07430, lng: -89.40095 },
+    { lat: 43.07430, lng: -89.40178 },
+  ],
+},
   {
     prompt: "Where can you find the plaque containing UW’s famous “sifting and winnowing” statement?",
     answerLabel: "Bascom Hall",
