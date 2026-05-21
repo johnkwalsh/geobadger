@@ -3,6 +3,7 @@ export type QuizQuestion = {
   answerLabel: string;
   lat: number;
   lng: number;
+  radiusMeters?: number;
 };
 
 export const questions: QuizQuestion[] = [
@@ -17,6 +18,7 @@ export const questions: QuizQuestion[] = [
     answerLabel: "Camp Randall Stadium",
     lat: 43.0699,
     lng: -89.4128,
+    radiusMeters: 180,
   },
   {
     prompt: "The Onion was founded by UW–Madison students here.",
@@ -29,6 +31,7 @@ export const questions: QuizQuestion[] = [
     answerLabel: "Lake Mendota",
     lat: 43.0997,
     lng: -89.4218,
+    radiusMeters: 1200,
   },
   {
     prompt: "The famous UW tradition of rubbing Lincoln’s shoe for good luck happens here.",
