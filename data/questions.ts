@@ -161,3 +161,4 @@ export const questions: QuizQuestion[] = [
     { lat: 43.07451, lng: -89.41433 },
   ],
 },
+  ];
