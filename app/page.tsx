@@ -110,10 +110,17 @@ function getFinalRating(score: number): string {
 
 function GeoBadgerTitle() {
   return (
-    <h1 className="game-title" aria-label="GeoBadger">
-      <span className="game-title-geo">GEO</span>
-      <span className="game-title-badger">BADGER</span>
-    </h1>
+    <header className="gb-header" aria-label="GeoBadger">
+      <svg className="gb-header-pin" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 6c-11.1 0-20 8.8-20 19.7C12 39.5 30.1 56 32 58c1.9-2 20-18.5 20-32.3C52 14.8 43.1 6 32 6Z" />
+        <circle cx="32" cy="26" r="8.2" />
+      </svg>
+      <h1 className="game-title">
+        <span className="game-title-geo">GEO</span>
+        <span className="game-title-badger">BADGER</span>
+      </h1>
+      <p className="gb-header-subtitle">UW Campus Edition</p>
+    </header>
   );
 }
 
