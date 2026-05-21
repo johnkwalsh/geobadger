@@ -94,8 +94,7 @@ function formatDistance(distanceMeters: number): string {
 function getFinalRating(score: number): string {
   if (score >= 4500) return "True Badger";
   if (score >= 3500) return "Madison Native";
-  if (score >= 2500) return "Campus Regular";
-  return "Freshman Orientation";
+  return "Lost Freshman";
 }
 
 function GeoBadgerTitle() {
@@ -198,6 +197,7 @@ export default function Home() {
 
     const lines = [
       `GeoBadger ${totalScore}/5000`,
+      finalRating,
       scoreEmojiLine,
     ];
     await navigator.clipboard.writeText(lines.join("\n"));
