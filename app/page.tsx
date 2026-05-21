@@ -194,7 +194,7 @@ export default function Home() {
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
-                {i + 1}. {result.answerLabel}: {result.points}/1000 ({formatDistance(result.distanceMeters)})
+                {i + 1}. {result.answerLabel}: {result.points}/1000 ({result.insideRadiusZone ? "Inside correct area" : formatDistance(result.distanceMeters)})
               </li>
             ))}
           </ul>
