@@ -16,6 +16,7 @@ type RoundResult = {
   guess: Guess;
   distanceMeters: number;
   points: number;
+  insideCorrectArea: boolean;
 };
 
 const EARTH_RADIUS_METERS = 6371000;
@@ -38,6 +39,23 @@ function scoreFromDistance(distanceMeters: number): number {
   const maxDistanceForPoints = 6000;
   const normalized = Math.max(0, 1 - distanceMeters / maxDistanceForPoints);
   return Math.round(normalized * 1000);
+}
+
+function isPointInPolygon(point: Guess, polygon: Guess[]): boolean {
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const xi = polygon[i].lng;
+    const yi = polygon[i].lat;
+    const xj = polygon[j].lng;
+    const yj = polygon[j].lat;
+
+    const intersects =
+      yi > point.lat !== yj > point.lat &&
+      point.lng < ((xj - xi) * (point.lat - yi)) / (yj - yi) + xi;
+
+    if (intersects) inside = !inside;
+  }
+  return inside;
 }
 
 function formatDistance(distanceMeters: number): string {
@@ -79,7 +97,10 @@ export default function Home() {
 
     const answer = { lat: currentQuestion.lat, lng: currentQuestion.lng };
     const distanceMeters = haversineMeters(guess, answer);
-    const points = scoreFromDistance(distanceMeters);
+    const insideCorrectArea = Boolean(
+      currentQuestion.polygon && isPointInPolygon(guess, currentQuestion.polygon),
+    );
+    const points = insideCorrectArea ? 1000 : scoreFromDistance(distanceMeters);
 
     const result: RoundResult = {
       questionPrompt: currentQuestion.prompt,
@@ -88,6 +109,7 @@ export default function Home() {
       guess,
       distanceMeters,
       points,
+      insideCorrectArea,
     };
 
     setRoundResult(result);
@@ -179,6 +201,7 @@ export default function Home() {
             <div className="result-stats">
               <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
               <p><strong>Points:</strong> {roundResult.points} / 1000</p>
+              {roundResult.insideCorrectArea && <p><strong>Inside correct area</strong></p>}
             </div>
             <button onClick={handleNext}>Next question</button>
           </div>
