@@ -10,13 +10,11 @@ const QuizMap = dynamic(() => import("@/components/QuizMap"), {
 
 type Guess = { lat: number; lng: number };
 type RoundResult = {
-  questionPrompt: string;
+  prompt: string;
   answerLabel: string;
-  answer: Guess;
-  guess: Guess;
   distanceMeters: number;
   points: number;
-  insideCorrectArea: boolean;
+  insideRadiusZone?: boolean;
 };
 
 const EARTH_RADIUS_METERS = 6371000;
