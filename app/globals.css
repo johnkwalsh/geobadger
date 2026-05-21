@@ -189,6 +189,7 @@ button:disabled {
   background: #c5050c;
   border: 3px solid #ffffff;
   color: #ffffff;
+  animation: answerMarkerPulse 1.8s ease-in-out infinite;
 }
 
 .card ul {
