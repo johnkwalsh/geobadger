@@ -7,12 +7,18 @@ export type QuizQuestion = {
 };
 
 export const questions: QuizQuestion[] = [
-  {
-    prompt: "Vitamin B was discovered here.",
-    answerLabel: "DeLuca Biochemistry Building",
-    lat: 43.0767,
-    lng: -89.4125,
-  },
+{
+  prompt: "Vitamin B was discovered here.",
+  answerLabel: "DeLuca Biochemistry Building",
+  lat: 43.0767,
+  lng: -89.4125,
+  polygon: [
+    { lat: 43.07708, lng: -89.41305 },
+    { lat: 43.07708, lng: -89.41195 },
+    { lat: 43.07632, lng: -89.41195 },
+    { lat: 43.07632, lng: -89.41305 },
+  ],
+},
   {
     prompt: "Barry Alvarez coached his first game as Wisconsin head coach here.",
     answerLabel: "Camp Randall Stadium",
