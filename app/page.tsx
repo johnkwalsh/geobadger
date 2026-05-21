@@ -21,6 +21,17 @@ type RoundResult = {
 };
 
 const EARTH_RADIUS_METERS = 6371000;
+const GAME_QUESTION_COUNT = 5;
+
+function pickRandomQuestions<T>(pool: T[], count: number): T[] {
+  const shuffled = [...pool];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
 
 function haversineMeters(a: Guess, b: Guess): number {
   const toRadians = (deg: number) => (deg * Math.PI) / 180;
@@ -107,6 +118,9 @@ function GeoBadgerTitle() {
 }
 
 export default function Home() {
+  const [selectedQuestions, setSelectedQuestions] = useState(() =>
+    pickRandomQuestions(questions, GAME_QUESTION_COUNT),
+  );
   const [index, setIndex] = useState(0);
   const [guess, setGuess] = useState<Guess | null>(null);
   const [results, setResults] = useState<RoundResult[]>([]);
@@ -115,8 +129,8 @@ export default function Home() {
   const [animatedTotalScore, setAnimatedTotalScore] = useState(0);
   const [showPerfectOverlay, setShowPerfectOverlay] = useState(false);
 
-  const currentQuestion = questions[index];
-  const isComplete = index >= questions.length;
+  const currentQuestion = selectedQuestions[index];
+  const isComplete = index >= selectedQuestions.length;
 
   const totalScore = useMemo(
     () => results.reduce((sum, result) => sum + result.points, 0),
@@ -191,6 +205,7 @@ export default function Home() {
   };
 
   const handleReset = () => {
+    setSelectedQuestions(pickRandomQuestions(questions, GAME_QUESTION_COUNT));
     setIndex(0);
     setGuess(null);
     setResults([]);
@@ -248,7 +263,7 @@ export default function Home() {
       <section className="card">
         <GeoBadgerTitle />
         <p className="question-count">
-          Question {index + 1} of {questions.length}
+          Question {index + 1} of {selectedQuestions.length}
         </p>
         <h2>{currentQuestion.prompt}</h2>
 
