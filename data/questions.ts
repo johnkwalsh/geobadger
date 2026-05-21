@@ -71,7 +71,6 @@ export const questions: QuizQuestion[] = [
       { lat: 43.07465, lng: -89.40122 },
     ],
   },
-  },
   {
     prompt: "This is where graduates sit on Abe Lincoln’s lap.",
     answerLabel: "Abraham Lincoln Statue on Bascom Hill",
