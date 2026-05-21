@@ -65,17 +65,17 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <LockedMapClickHandler onPick={onGuess} revealAnswer={revealAnswer} />
       {guess && (
-        <CircleMarker
-          center={[guess.lat, guess.lng]}
-          radius={12}
-          pathOptions={{
-            color: "#C5050C",
-            fillColor: "#FFFFFF",
-            fillOpacity: 1,
-            weight: 4,
-          }}
-        />
-      )}
+  <CircleMarker
+    center={[guess.lat, guess.lng]}
+    radius={12}
+    pathOptions={{
+      color: "#C5050C",
+      fillColor: "#FFFFFF",
+      fillOpacity: 1,
+      weight: 4,
+    }}
+  />
+)}
       {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} icon={answerMarkerIcon} />}
       {revealAnswer && guess && answer && (
         <>
