@@ -40,18 +40,6 @@ export const questions: QuizQuestion[] = [
     ],
   },
   {
-    prompt: "Where did UW’s lakefront student union open in 1928?",
-    answerLabel: "Memorial Union",
-    lat: 43.07639,
-    lng: -89.40000,
-    polygon: [
-      { lat: 43.07695, lng: -89.40070 },
-      { lat: 43.07695, lng: -89.39935 },
-      { lat: 43.07605, lng: -89.39935 },
-      { lat: 43.07605, lng: -89.40070 },
-    ],
-  },
-  {
     prompt: "Verner Suomi, known as the 'father of satellite meteorology,' worked here.",
     answerLabel: "Space Science and Engineering Center",
     lat: 43.07070,
