@@ -39,16 +39,16 @@ export const questions: QuizQuestion[] = [
     lat: 43.0769,
     lng: -89.4003,
   },
+   {
+    prompt: "Verner Suomi, known as the 'father of satellite meteorology,' worked here.",
+    answerLabel: "Space Science and Engineering Center",
+    lat: 43.0746,
+    lng: -89.4008,
+  },
   {
   prompt: "This is where graduates sit on Abe Lincoln’s lap",
-  answerLabel: "Bascom Hill",
+  answerLabel: "Abraham Lincoln Statue on Bascom Hill",
   lat: 43.075313,
   lng: -89.403699,
 },
-  {
-    prompt: "The famous UW tradition of rubbing Lincoln’s shoe for good luck happens here.",
-    answerLabel: "Abraham Lincoln Statue at Bascom Hill",
-    lat: 43.0755,
-    lng: -89.4041,
-  },
 ];
