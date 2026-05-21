@@ -181,7 +181,7 @@ export default function Home() {
               <strong>Your guess:</strong> {roundResult.guess.lat.toFixed(5)}, {roundResult.guess.lng.toFixed(5)}
             </p>
             <div className="result-stats">
-              <p><strong>Distance:</strong> {roundResult.insideRadiusZone ? "Inside correct area" : formatDistance(roundResult.distanceMeters)}</p>
+              <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
               <p><strong>Points:</strong> {roundResult.points} / 1000</p>
             </div>
             <button onClick={handleNext}>Next question</button>
