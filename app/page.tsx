@@ -10,8 +10,10 @@ const QuizMap = dynamic(() => import("@/components/QuizMap"), {
 
 type Guess = { lat: number; lng: number };
 type RoundResult = {
-  prompt: string;
+  questionPrompt: string;
   answerLabel: string;
+  answer: { lat: number; lng: number };
+  guess: { lat: number; lng: number };
   distanceMeters: number;
   points: number;
   insideRadiusZone?: boolean;
