@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { questions } from "@/data/questions";
 
 const QuizMap = dynamic(() => import("@/components/QuizMap"), {
@@ -16,7 +16,7 @@ type RoundResult = {
   guess: Guess;
   distanceMeters: number;
   points: number;
-  insideRadiusZone: boolean;
+  insideCorrectArea: boolean;
 };
 
 const EARTH_RADIUS_METERS = 6371000;
@@ -41,6 +41,23 @@ function scoreFromDistance(distanceMeters: number): number {
   return Math.round(normalized * 1000);
 }
 
+function isPointInPolygon(point: Guess, polygon: Guess[]): boolean {
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const xi = polygon[i].lng;
+    const yi = polygon[i].lat;
+    const xj = polygon[j].lng;
+    const yj = polygon[j].lat;
+
+    const intersects =
+      yi > point.lat !== yj > point.lat &&
+      point.lng < ((xj - xi) * (point.lat - yi)) / (yj - yi) + xi;
+
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
 function formatDistance(distanceMeters: number): string {
   const feet = distanceMeters * 3.28084;
   if (feet < 5280) {
@@ -49,6 +66,13 @@ function formatDistance(distanceMeters: number): string {
 
   const miles = feet / 5280;
   return `${miles.toFixed(2)} mi`;
+}
+
+function getFinalRating(score: number): string {
+  if (score >= 4500) return "True Badger";
+  if (score >= 3500) return "Madison Native";
+  if (score >= 2500) return "Campus Regular";
+  return "Freshman Orientation";
 }
 
 function GeoBadgerTitle() {
@@ -66,6 +90,7 @@ export default function Home() {
   const [results, setResults] = useState<RoundResult[]>([]);
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [animatedTotalScore, setAnimatedTotalScore] = useState(0);
 
   const currentQuestion = questions[index];
   const isComplete = index >= questions.length;
@@ -74,15 +99,42 @@ export default function Home() {
     () => results.reduce((sum, result) => sum + result.points, 0),
     [results],
   );
+  const finalRating = useMemo(() => getFinalRating(totalScore), [totalScore]);
+
+  useEffect(() => {
+    if (!isComplete) {
+      setAnimatedTotalScore(0);
+      return;
+    }
+
+    let animationFrameId = 0;
+    const durationMs = 1200;
+    const startTime = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / durationMs);
+      const easedProgress = 1 - (1 - progress) * (1 - progress);
+      setAnimatedTotalScore(Math.round(totalScore * easedProgress));
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isComplete, totalScore]);
 
   const handleSubmit = () => {
     if (!guess || !currentQuestion) return;
 
     const answer = { lat: currentQuestion.lat, lng: currentQuestion.lng };
     const distanceMeters = haversineMeters(guess, answer);
-    const insideRadiusZone =
-      currentQuestion.radiusMeters !== undefined && distanceMeters <= currentQuestion.radiusMeters;
-    const points = insideRadiusZone ? 1000 : scoreFromDistance(distanceMeters);
+    const insideCorrectArea = Boolean(
+      currentQuestion.polygon && isPointInPolygon(guess, currentQuestion.polygon),
+    );
+    const points = insideCorrectArea ? 1000 : scoreFromDistance(distanceMeters);
 
     const result: RoundResult = {
       questionPrompt: currentQuestion.prompt,
@@ -91,7 +143,7 @@ export default function Home() {
       guess,
       distanceMeters,
       points,
-      insideRadiusZone,
+      insideCorrectArea,
     };
 
     setRoundResult(result);
@@ -134,7 +186,11 @@ export default function Home() {
       <main className="page">
         <section className="card final-card">
           <h1 className="final-title">🎉 UW–Madison Geo Quiz Complete!</h1>
-          <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
+          <div className="final-score-panel">
+            <p className="final-score-label">Final Score</p>
+            <h2 className="final-score">{animatedTotalScore.toLocaleString()} / 5000</h2>
+            <p className="final-rating">{finalRating}</p>
+          </div>
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
@@ -183,6 +239,7 @@ export default function Home() {
             <div className="result-stats">
               <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
               <p><strong>Points:</strong> {roundResult.points} / 1000</p>
+              {roundResult.insideCorrectArea && <p><strong>Inside correct area</strong></p>}
             </div>
             <button onClick={handleNext}>Next question</button>
           </div>
