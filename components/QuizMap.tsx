@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 const userMarkerIcon = L.divIcon({
   className: "custom-marker-wrapper",
-  html: '<div style="width:44px;height:44px;border-radius:999px;background:#fff;border:4px solid #C5050C;box-shadow:0 2px 10px rgba(0,0,0,.28);"></div>',
-  iconSize: [44, 44],
-  iconAnchor: [22, 22],
+  html: '<img class="custom-marker custom-marker-user" src="/bucky-marker.png" alt="" />',
+  iconSize: [56, 56],
+  iconAnchor: [28, 56],
 });
 
 const answerMarkerIcon = L.divIcon({
