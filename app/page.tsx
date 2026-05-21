@@ -37,9 +37,31 @@ function haversineMeters(a: Guess, b: Guess): number {
 }
 
 function scoreFromDistance(distanceMeters: number): number {
-  const maxDistanceForPoints = 6000;
-  const normalized = Math.max(0, 1 - distanceMeters / maxDistanceForPoints);
-  return Math.round(normalized * 1000);
+  const distanceFeet = distanceMeters * 3.28084;
+
+  if (distanceFeet <= 100) return 1000;
+  if (distanceFeet <= 250) {
+    const progress = (distanceFeet - 100) / 150;
+    return Math.round(999 - progress * 99);
+  }
+  if (distanceFeet <= 500) {
+    const progress = (distanceFeet - 250) / 250;
+    return Math.round(899 - progress * 149);
+  }
+  if (distanceFeet <= 1000) {
+    const progress = (distanceFeet - 500) / 500;
+    return Math.round(749 - progress * 249);
+  }
+  if (distanceFeet <= 2000) {
+    const progress = (distanceFeet - 1000) / 1000;
+    return Math.round(499 - progress * 249);
+  }
+
+  const maxDistanceForPointsFeet = 4000;
+  if (distanceFeet >= maxDistanceForPointsFeet) return 0;
+
+  const progress = (distanceFeet - 2000) / (maxDistanceForPointsFeet - 2000);
+  return Math.round(249 - progress * 249);
 }
 
 function isPointInPolygon(point: Guess, polygon: Guess[]): boolean {
@@ -72,8 +94,7 @@ function formatDistance(distanceMeters: number): string {
 function getFinalRating(score: number): string {
   if (score >= 4500) return "True Badger";
   if (score >= 3500) return "Madison Native";
-  if (score >= 2500) return "Campus Regular";
-  return "Freshman Orientation";
+  return "Lost Freshman";
 }
 
 function GeoBadgerTitle() {
@@ -176,6 +197,7 @@ export default function Home() {
 
     const lines = [
       `GeoBadger ${totalScore}/5000`,
+      finalRating,
       scoreEmojiLine,
     ];
     await navigator.clipboard.writeText(lines.join("\n"));
