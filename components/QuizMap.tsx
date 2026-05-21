@@ -30,6 +30,7 @@ function LockedMapClickHandler({ onPick, revealAnswer }: MapClickHandlerProps) {
       onPick(event.latlng.lat, event.latlng.lng);
     },
   });
+
   return null;
 }
 
@@ -44,10 +45,12 @@ function FitToResult({ guess, answer, revealAnswer }: FitToResultProps) {
 
   useEffect(() => {
     if (!revealAnswer) return;
+
     const bounds = L.latLngBounds([
       [guess.lat, guess.lng],
       [answer.lat, answer.lng],
     ]);
+
     map.fitBounds(bounds, {
       padding: [40, 40],
       maxZoom: 17,
@@ -59,24 +62,49 @@ function FitToResult({ guess, answer, revealAnswer }: FitToResultProps) {
 
 const MADISON_CENTER: [number, number] = [43.0731, -89.4012];
 
-export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMapProps) {
+export default function QuizMap({
+  guess,
+  answer,
+  onGuess,
+  revealAnswer,
+}: QuizMapProps) {
   return (
-    <MapContainer center={MADISON_CENTER} zoom={14} scrollWheelZoom style={{ height: "50vh", minHeight: 320, width: "100%" }}>
-      <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <LockedMapClickHandler onPick={onGuess} revealAnswer={revealAnswer} />
+    <MapContainer
+      center={MADISON_CENTER}
+      zoom={14}
+      scrollWheelZoom
+      style={{ height: "50vh", minHeight: 320, width: "100%" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      <LockedMapClickHandler
+        onPick={onGuess}
+        revealAnswer={revealAnswer}
+      />
+
       {guess && (
-  <CircleMarker
-    center={[guess.lat, guess.lng]}
-    radius={12}
-    pathOptions={{
-      color: "#C5050C",
-      fillColor: "#FFFFFF",
-      fillOpacity: 1,
-      weight: 4,
-    }}
-  />
-)}
-      {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} icon={answerMarkerIcon} />}
+        <CircleMarker
+          center={[guess.lat, guess.lng]}
+          radius={12}
+          pathOptions={{
+            color: "#C5050C",
+            fillColor: "#FFFFFF",
+            fillOpacity: 1,
+            weight: 4,
+          }}
+        />
+      )}
+
+      {revealAnswer && answer && (
+        <Marker
+          position={[answer.lat, answer.lng]}
+          icon={answerMarkerIcon}
+        />
+      )}
+
       {revealAnswer && guess && answer && (
         <>
           <Polyline
@@ -90,7 +118,12 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
               opacity: 0.95,
             }}
           />
-          <FitToResult guess={guess} answer={answer} revealAnswer={revealAnswer} />
+
+          <FitToResult
+            guess={guess}
+            answer={answer}
+            revealAnswer={revealAnswer}
+          />
         </>
       )}
     </MapContainer>

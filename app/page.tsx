@@ -12,11 +12,12 @@ type Guess = { lat: number; lng: number };
 type RoundResult = {
   questionPrompt: string;
   answerLabel: string;
-  answer: Guess;
-  guess: Guess;
+  answer: { lat: number; lng: number };
+  guess: { lat: number; lng: number };
   distanceMeters: number;
   points: number;
-  insideCorrectArea: boolean;
+  insideRadiusZone?: boolean;
+  insideCorrectArea?: boolean;
 };
 
 const EARTH_RADIUS_METERS = 6371000;
@@ -194,7 +195,7 @@ export default function Home() {
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
-                {i + 1}. {result.answerLabel}: {result.points}/1000 ({formatDistance(result.distanceMeters)})
+                {i + 1}. {result.answerLabel}: {result.points}/1000 ({result.insideRadiusZone ? "Inside correct area" : formatDistance(result.distanceMeters)})
               </li>
             ))}
           </ul>
