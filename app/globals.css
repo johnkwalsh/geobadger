@@ -156,6 +156,155 @@ button:disabled {
   color: #1f1f1f;
 }
 
+.perfect-guess-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  animation: perfectOverlayLifecycle 1600ms ease-out forwards;
+}
+
+.perfect-guess-overlay-banner {
+  margin: 0;
+  padding: 0.9rem 1.15rem;
+  text-align: center;
+  font-size: clamp(1.5rem, 7vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #c5050c;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(197, 5, 12, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  animation: perfectBannerPop 1600ms ease-out forwards;
+}
+
+.perfect-guess-overlay-confetti {
+  position: absolute;
+  inset: 0;
+}
+
+.perfect-guess-overlay-particle {
+  position: absolute;
+  top: -10px;
+  width: 7px;
+  height: 12px;
+  border-radius: 999px;
+  opacity: 0;
+  animation: confettiDrop 900ms ease-out forwards;
+}
+
+.perfect-guess-overlay-particle:nth-child(odd) {
+  background: #c5050c;
+}
+
+.perfect-guess-overlay-particle:nth-child(even) {
+  background: #ffffff;
+  border: 1px solid rgba(197, 5, 12, 0.35);
+}
+
+.result-stats-perfect {
+  box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.17), 0 0 20px rgba(197, 5, 12, 0.12);
+  animation: perfectScorePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes perfectOverlayLifecycle {
+  from {
+    opacity: 0;
+  }
+  20%,
+  68% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes perfectBannerPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  18% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  36%,
+  68% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes confettiDrop {
+  0% {
+    transform: translateY(-4px) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(100vh) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes perfectScorePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.17), 0 0 14px rgba(197, 5, 12, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.24), 0 0 24px rgba(197, 5, 12, 0.18);
+  }
+}
+
+.perfect-guess-overlay-particle:nth-child(1) { left: 3%; animation-delay: 10ms; }
+.perfect-guess-overlay-particle:nth-child(2) { left: 6%; animation-delay: 40ms; }
+.perfect-guess-overlay-particle:nth-child(3) { left: 9%; animation-delay: 70ms; }
+.perfect-guess-overlay-particle:nth-child(4) { left: 12%; animation-delay: 20ms; }
+.perfect-guess-overlay-particle:nth-child(5) { left: 15%; animation-delay: 80ms; }
+.perfect-guess-overlay-particle:nth-child(6) { left: 18%; animation-delay: 30ms; }
+.perfect-guess-overlay-particle:nth-child(7) { left: 22%; animation-delay: 55ms; }
+.perfect-guess-overlay-particle:nth-child(8) { left: 26%; animation-delay: 95ms; }
+.perfect-guess-overlay-particle:nth-child(9) { left: 30%; animation-delay: 35ms; }
+.perfect-guess-overlay-particle:nth-child(10) { left: 34%; animation-delay: 75ms; }
+.perfect-guess-overlay-particle:nth-child(11) { left: 38%; animation-delay: 15ms; }
+.perfect-guess-overlay-particle:nth-child(12) { left: 42%; animation-delay: 110ms; }
+.perfect-guess-overlay-particle:nth-child(13) { left: 46%; animation-delay: 45ms; }
+.perfect-guess-overlay-particle:nth-child(14) { left: 50%; animation-delay: 100ms; }
+.perfect-guess-overlay-particle:nth-child(15) { left: 54%; animation-delay: 25ms; }
+.perfect-guess-overlay-particle:nth-child(16) { left: 58%; animation-delay: 90ms; }
+.perfect-guess-overlay-particle:nth-child(17) { left: 62%; animation-delay: 50ms; }
+.perfect-guess-overlay-particle:nth-child(18) { left: 66%; animation-delay: 120ms; }
+.perfect-guess-overlay-particle:nth-child(19) { left: 70%; animation-delay: 65ms; }
+.perfect-guess-overlay-particle:nth-child(20) { left: 74%; animation-delay: 85ms; }
+.perfect-guess-overlay-particle:nth-child(21) { left: 78%; animation-delay: 28ms; }
+.perfect-guess-overlay-particle:nth-child(22) { left: 81%; animation-delay: 105ms; }
+.perfect-guess-overlay-particle:nth-child(23) { left: 84%; animation-delay: 60ms; }
+.perfect-guess-overlay-particle:nth-child(24) { left: 87%; animation-delay: 18ms; }
+.perfect-guess-overlay-particle:nth-child(25) { left: 90%; animation-delay: 98ms; }
+.perfect-guess-overlay-particle:nth-child(26) { left: 93%; animation-delay: 42ms; }
+.perfect-guess-overlay-particle:nth-child(27) { left: 96%; animation-delay: 76ms; }
+.perfect-guess-overlay-particle:nth-child(28) { left: 99%; animation-delay: 12ms; }
+.perfect-guess-overlay-particle:nth-child(29) { left: 5%; animation-delay: 130ms; }
+.perfect-guess-overlay-particle:nth-child(30) { left: 25%; animation-delay: 140ms; }
+.perfect-guess-overlay-particle:nth-child(31) { left: 45%; animation-delay: 150ms; }
+.perfect-guess-overlay-particle:nth-child(32) { left: 65%; animation-delay: 160ms; }
+.perfect-guess-overlay-particle:nth-child(33) { left: 85%; animation-delay: 170ms; }
+.perfect-guess-overlay-particle:nth-child(34) { left: 35%; animation-delay: 180ms; }
+.perfect-guess-overlay-particle:nth-child(35) { left: 55%; animation-delay: 190ms; }
+.perfect-guess-overlay-particle:nth-child(36) { left: 75%; animation-delay: 200ms; }
+
 .copy-note {
   color: #9b0000;
   font-weight: 700;
@@ -270,5 +419,10 @@ button:disabled {
 
   .result-stats {
     padding: 0.55rem 0.65rem;
+  }
+
+  .perfect-guess-overlay-banner {
+    letter-spacing: 0.07em;
+    width: min(92vw, 520px);
   }
 }
