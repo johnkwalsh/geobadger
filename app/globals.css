@@ -156,6 +156,106 @@ button:disabled {
   color: #1f1f1f;
 }
 
+.perfect-guess {
+  position: relative;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(197, 5, 12, 0.12), rgba(255, 255, 255, 0.95));
+  border: 1px solid rgba(197, 5, 12, 0.35);
+  animation: perfectGuessReveal 280ms ease-out both;
+}
+
+.perfect-guess-banner {
+  margin: 0;
+  padding: 0.8rem 0.7rem;
+  text-align: center;
+  font-size: clamp(1rem, 4.2vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  color: #c5050c;
+}
+
+.perfect-guess-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.perfect-guess-particle {
+  position: absolute;
+  top: -8px;
+  width: 6px;
+  height: 10px;
+  border-radius: 999px;
+  opacity: 0;
+  animation: confettiDrop 700ms ease-out forwards;
+}
+
+.perfect-guess-particle:nth-child(odd) {
+  background: #c5050c;
+}
+
+.perfect-guess-particle:nth-child(even) {
+  background: #ffffff;
+  border: 1px solid rgba(197, 5, 12, 0.35);
+}
+
+.result-stats-perfect {
+  box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.17), 0 0 20px rgba(197, 5, 12, 0.12);
+  animation: perfectScorePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes perfectGuessReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes confettiDrop {
+  0% {
+    transform: translateY(-4px) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(68px) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+@keyframes perfectScorePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.17), 0 0 14px rgba(197, 5, 12, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(197, 5, 12, 0.24), 0 0 24px rgba(197, 5, 12, 0.18);
+  }
+}
+
+.perfect-guess-particle:nth-child(1) { left: 7%; animation-delay: 20ms; }
+.perfect-guess-particle:nth-child(2) { left: 13%; animation-delay: 60ms; }
+.perfect-guess-particle:nth-child(3) { left: 20%; animation-delay: 10ms; }
+.perfect-guess-particle:nth-child(4) { left: 27%; animation-delay: 95ms; }
+.perfect-guess-particle:nth-child(5) { left: 34%; animation-delay: 35ms; }
+.perfect-guess-particle:nth-child(6) { left: 41%; animation-delay: 120ms; }
+.perfect-guess-particle:nth-child(7) { left: 48%; animation-delay: 50ms; }
+.perfect-guess-particle:nth-child(8) { left: 55%; animation-delay: 140ms; }
+.perfect-guess-particle:nth-child(9) { left: 62%; animation-delay: 45ms; }
+.perfect-guess-particle:nth-child(10) { left: 69%; animation-delay: 100ms; }
+.perfect-guess-particle:nth-child(11) { left: 76%; animation-delay: 25ms; }
+.perfect-guess-particle:nth-child(12) { left: 83%; animation-delay: 130ms; }
+.perfect-guess-particle:nth-child(13) { left: 90%; animation-delay: 65ms; }
+.perfect-guess-particle:nth-child(14) { left: 95%; animation-delay: 150ms; }
+
 .copy-note {
   color: #9b0000;
   font-weight: 700;
@@ -270,5 +370,9 @@ button:disabled {
 
   .result-stats {
     padding: 0.55rem 0.65rem;
+  }
+
+  .perfect-guess-banner {
+    letter-spacing: 0.06em;
   }
 }
