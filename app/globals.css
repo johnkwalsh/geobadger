@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  font-family: Inter, Arial, sans-serif;
+  font-family: "Red Hat Text", Inter, Arial, sans-serif;
   background-color: #c5050c;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ctext x='20' y='82' font-size='72' font-family='Arial, sans-serif' font-weight='800' fill='rgba(255,255,255,0.10)'%3EW%3C/text%3E%3C/svg%3E");
   background-repeat: repeat;
@@ -62,6 +62,7 @@ body {
 h1,
 h2 {
   color: #9b0000;
+  font-family: "Red Hat Display", Inter, Arial, sans-serif;
 }
 
 h2 {
@@ -74,6 +75,26 @@ h2 {
   font-size: clamp(1.5rem, 4.5vw, 2rem);
   font-weight: 900;
   color: #9b0000;
+  text-align: center;
+}
+
+.final-score-panel {
+  background: #f7f7f7;
+  border: 2px solid #9b0000;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  text-align: center;
+  margin-bottom: 0.9rem;
+  animation: finalScoreReveal 420ms ease-out both;
+}
+
+.final-score-label {
+  margin: 0 0 0.35rem;
+  color: #9b0000;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
 }
 
 .actions {
@@ -84,6 +105,7 @@ h2 {
 }
 
 button {
+  font-family: "Red Hat Display", Inter, Arial, sans-serif;
   border: 1px solid #9b0000;
   border-radius: 12px;
   padding: 0.78rem 1.15rem;
@@ -134,6 +156,22 @@ button:disabled {
   margin: 0.25rem 0;
   font-weight: 700;
   color: #1f1f1f;
+}
+
+.card,
+.card li,
+.question-count,
+.result,
+.copy-note,
+.final-score-label,
+.final-rating {
+  font-family: "Red Hat Text", Inter, Arial, sans-serif;
+}
+
+.game-title,
+.final-title,
+.final-score {
+  font-family: "Red Hat Display", Inter, Arial, sans-serif;
 }
 
 .copy-note {
@@ -187,14 +225,30 @@ button:disabled {
 }
 
 .final-score {
-  background: #f7f7f7;
-  border: 2px solid #9b0000;
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
-  font-size: clamp(1.2rem, 3.6vw, 1.6rem);
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 900;
   text-align: center;
   color: #c5050c;
+  line-height: 1.05;
+}
+
+.final-rating {
+  margin: 0.45rem 0 0;
+  color: #1f1f1f;
+  font-size: clamp(1rem, 3.6vw, 1.28rem);
+  font-weight: 800;
+}
+
+@keyframes finalScoreReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 640px) {
