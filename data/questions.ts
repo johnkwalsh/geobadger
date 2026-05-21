@@ -25,11 +25,11 @@ export const questions: QuizQuestion[] = [
     lng: -89.4003,
   },
   {
-    prompt: "Students jump into this lake after major Badger victories.",
-    answerLabel: "Lake Mendota",
-    lat: 43.0997,
-    lng: -89.4218,
-  },
+  prompt: "This is where graduates sit on Abe Lincoln’s lap",
+  answerLabel: "Bascom Hill",
+  lat: 43.0755,
+  lng: -89.4041,
+},
   {
     prompt: "The famous UW tradition of rubbing Lincoln’s shoe for good luck happens here.",
     answerLabel: "Abraham Lincoln Statue at Bascom Hill",
