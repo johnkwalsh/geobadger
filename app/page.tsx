@@ -113,6 +113,7 @@ export default function Home() {
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [animatedTotalScore, setAnimatedTotalScore] = useState(0);
+  const [showPerfectOverlay, setShowPerfectOverlay] = useState(false);
 
   const currentQuestion = questions[index];
   const isComplete = index >= questions.length;
@@ -147,6 +148,17 @@ export default function Home() {
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
   }, [isComplete, totalScore]);
+
+  useEffect(() => {
+    if (roundResult?.points !== 1000) return;
+
+    setShowPerfectOverlay(true);
+    const timeoutId = window.setTimeout(() => {
+      setShowPerfectOverlay(false);
+    }, 1600);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [roundResult]);
 
   const handleSubmit = () => {
     if (!guess || !currentQuestion) return;
@@ -275,6 +287,17 @@ export default function Home() {
               {roundResult.insideCorrectArea && <p><strong>Inside correct area</strong></p>}
             </div>
             <button onClick={handleNext}>Next question</button>
+          </div>
+        )}
+
+        {showPerfectOverlay && (
+          <div className="perfect-guess-overlay" role="status" aria-live="polite">
+            <div className="perfect-guess-overlay-confetti" aria-hidden="true">
+              {Array.from({ length: 36 }).map((_, i) => (
+                <span key={i} className="perfect-guess-overlay-particle" />
+              ))}
+            </div>
+            <p className="perfect-guess-overlay-banner">PERFECT GUESS</p>
           </div>
         )}
       </section>
