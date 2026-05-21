@@ -56,20 +56,11 @@ export const questions: QuizQuestion[] = [
     ],
   },
   {
-    prompt: "Verner Suomi, known as the 'father of satellite meteorology,' worked here.",
-    answerLabel: "Space Science and Engineering Center",
-    lat: 43.0746,
-    lng: -89.4008,
-    polygon: [
-      { lat: 43.07489, lng: -89.40114 },
-      { lat: 43.07496, lng: -89.40077 },
-      { lat: 43.07483, lng: -89.40045 },
-      { lat: 43.07452, lng: -89.40032 },
-      { lat: 43.07427, lng: -89.40049 },
-      { lat: 43.07422, lng: -89.40088 },
-      { lat: 43.07436, lng: -89.40115 },
-      { lat: 43.07465, lng: -89.40122 },
-    ],
+  prompt: "Verner Suomi, known as the 'Father of Satellite Meteorology,' worked here.",
+  answerLabel: "Space Science and Engineering Center",
+  lat: 43.0719,
+  lng: -89.4106,
+}
   },
   {
     prompt: "This is where graduates sit on Abe Lincoln’s lap.",
