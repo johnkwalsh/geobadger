@@ -27,8 +27,8 @@ export const questions: QuizQuestion[] = [
   {
   prompt: "This is where graduates sit on Abe Lincoln’s lap",
   answerLabel: "Bascom Hill",
-  lat: 43.0755,
-  lng: -89.4041,
+  lat: 43.075313,
+  lng: -89.403699,
 },
   {
     prompt: "The famous UW tradition of rubbing Lincoln’s shoe for good luck happens here.",
