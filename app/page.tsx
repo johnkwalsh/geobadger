@@ -17,6 +17,7 @@ type RoundResult = {
   distanceMeters: number;
   points: number;
   insideRadiusZone?: boolean;
+  insideCorrectArea?: boolean;
 };
 
 const EARTH_RADIUS_METERS = 6371000;
