@@ -160,7 +160,7 @@ export const questions: QuizQuestion[] = [
     ],
   },
   {
-    prompt: "Where has UW students’ famous campus ice cream been made for generations?",
+    prompt: "Where has the University's famous ice cream been made for generations?",
     answerLabel: "Babcock Hall",
     lat: 43.07495,
     lng: -89.41374,
