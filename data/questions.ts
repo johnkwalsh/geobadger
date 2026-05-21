@@ -80,8 +80,8 @@ export const questions: QuizQuestion[] = [
   {
   prompt: "Where was “On, Wisconsin!” first publicly performed in 1909?",
   answerLabel: "Music Hall",
-  lat: 43.07453,
-  lng: -89.40077,
+  lat: 43.07463,
+  lng: -89.40135,
   polygon: [
     { lat: 43.07479, lng: -89.40105 },
     { lat: 43.07479, lng: -89.40049 },
