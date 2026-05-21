@@ -7,19 +7,16 @@ export type QuizQuestion = {
 };
 
 export const questions: QuizQuestion[] = [
- {
+{
   prompt: "Vitamin B was discovered here.",
   answerLabel: "DeLuca Biochemistry Building",
   lat: 43.0767,
   lng: -89.4125,
   polygon: [
-    { lat: 43.07697, lng: -89.41295 },
-    { lat: 43.07703, lng: -89.41249 },
-    { lat: 43.07680, lng: -89.41218 },
-    { lat: 43.07652, lng: -89.41221 },
-    { lat: 43.07636, lng: -89.41255 },
-    { lat: 43.07650, lng: -89.41289 },
-    { lat: 43.07676, lng: -89.41302 },
+    { lat: 43.07708, lng: -89.41305 },
+    { lat: 43.07708, lng: -89.41195 },
+    { lat: 43.07632, lng: -89.41195 },
+    { lat: 43.07632, lng: -89.41305 },
   ],
 },
   {
@@ -192,4 +189,4 @@ export const questions: QuizQuestion[] = [
     { lat: 43.07532, lng: -89.40386 },
   ],
 },
-];
+  ];

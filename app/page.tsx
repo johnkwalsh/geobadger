@@ -289,6 +289,16 @@ export default function Home() {
           </div>
         ) : (
           <div className="result">
+            {roundResult.points === 1000 && (
+              <div className="perfect-guess" role="status" aria-live="polite">
+                <div className="perfect-guess-confetti" aria-hidden="true">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <span key={i} className="perfect-guess-particle" />
+                  ))}
+                </div>
+                <p className="perfect-guess-banner">PERFECT GUESS</p>
+              </div>
+            )}
             <p><strong>Correct location:</strong> {roundResult.answerLabel}</p>
             <p>
               <strong>Your guess:</strong> {roundResult.guess.lat.toFixed(5)}, {roundResult.guess.lng.toFixed(5)}

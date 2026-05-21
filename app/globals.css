@@ -209,52 +209,47 @@ button:disabled {
   color: #1f1f1f;
 }
 
-.perfect-guess-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.14);
-  animation: perfectOverlayLifecycle 1600ms ease-out forwards;
+.perfect-guess {
+  position: relative;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(197, 5, 12, 0.12), rgba(255, 255, 255, 0.95));
+  border: 1px solid rgba(197, 5, 12, 0.35);
+  animation: perfectGuessReveal 280ms ease-out both;
 }
 
-.perfect-guess-overlay-banner {
+.perfect-guess-banner {
   margin: 0;
-  padding: 0.9rem 1.15rem;
+  padding: 0.8rem 0.7rem;
   text-align: center;
-  font-size: clamp(1.5rem, 7vw, 3.2rem);
+  font-size: clamp(1rem, 4.2vw, 1.5rem);
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   color: #c5050c;
-  background: rgba(255, 255, 255, 0.95);
-  border: 2px solid rgba(197, 5, 12, 0.4);
-  border-radius: 14px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-  animation: perfectBannerPop 1600ms ease-out forwards;
 }
 
-.perfect-guess-overlay-confetti {
+.perfect-guess-confetti {
   position: absolute;
   inset: 0;
+  pointer-events: none;
 }
 
-.perfect-guess-overlay-particle {
+.perfect-guess-particle {
   position: absolute;
-  top: -10px;
-  width: 7px;
-  height: 12px;
+  top: -8px;
+  width: 6px;
+  height: 10px;
   border-radius: 999px;
   opacity: 0;
-  animation: confettiDrop 900ms ease-out forwards;
+  animation: confettiDrop 700ms ease-out forwards;
 }
 
-.perfect-guess-overlay-particle:nth-child(odd) {
+.perfect-guess-particle:nth-child(odd) {
   background: #c5050c;
 }
 
-.perfect-guess-overlay-particle:nth-child(even) {
+.perfect-guess-particle:nth-child(even) {
   background: #ffffff;
   border: 1px solid rgba(197, 5, 12, 0.35);
 }
@@ -264,36 +259,14 @@ button:disabled {
   animation: perfectScorePulse 1.6s ease-in-out infinite;
 }
 
-@keyframes perfectOverlayLifecycle {
+@keyframes perfectGuessReveal {
   from {
     opacity: 0;
-  }
-  20%,
-  68% {
-    opacity: 1;
+    transform: scale(0.94);
   }
   to {
-    opacity: 0;
-  }
-}
-
-@keyframes perfectBannerPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  18% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-  36%,
-  68% {
     opacity: 1;
     transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.98);
   }
 }
 
@@ -306,7 +279,7 @@ button:disabled {
     opacity: 0.85;
   }
   100% {
-    transform: translateY(100vh) rotate(180deg);
+    transform: translateY(68px) rotate(120deg);
     opacity: 0;
   }
 }
@@ -321,42 +294,20 @@ button:disabled {
   }
 }
 
-.perfect-guess-overlay-particle:nth-child(1) { left: 3%; animation-delay: 10ms; }
-.perfect-guess-overlay-particle:nth-child(2) { left: 6%; animation-delay: 40ms; }
-.perfect-guess-overlay-particle:nth-child(3) { left: 9%; animation-delay: 70ms; }
-.perfect-guess-overlay-particle:nth-child(4) { left: 12%; animation-delay: 20ms; }
-.perfect-guess-overlay-particle:nth-child(5) { left: 15%; animation-delay: 80ms; }
-.perfect-guess-overlay-particle:nth-child(6) { left: 18%; animation-delay: 30ms; }
-.perfect-guess-overlay-particle:nth-child(7) { left: 22%; animation-delay: 55ms; }
-.perfect-guess-overlay-particle:nth-child(8) { left: 26%; animation-delay: 95ms; }
-.perfect-guess-overlay-particle:nth-child(9) { left: 30%; animation-delay: 35ms; }
-.perfect-guess-overlay-particle:nth-child(10) { left: 34%; animation-delay: 75ms; }
-.perfect-guess-overlay-particle:nth-child(11) { left: 38%; animation-delay: 15ms; }
-.perfect-guess-overlay-particle:nth-child(12) { left: 42%; animation-delay: 110ms; }
-.perfect-guess-overlay-particle:nth-child(13) { left: 46%; animation-delay: 45ms; }
-.perfect-guess-overlay-particle:nth-child(14) { left: 50%; animation-delay: 100ms; }
-.perfect-guess-overlay-particle:nth-child(15) { left: 54%; animation-delay: 25ms; }
-.perfect-guess-overlay-particle:nth-child(16) { left: 58%; animation-delay: 90ms; }
-.perfect-guess-overlay-particle:nth-child(17) { left: 62%; animation-delay: 50ms; }
-.perfect-guess-overlay-particle:nth-child(18) { left: 66%; animation-delay: 120ms; }
-.perfect-guess-overlay-particle:nth-child(19) { left: 70%; animation-delay: 65ms; }
-.perfect-guess-overlay-particle:nth-child(20) { left: 74%; animation-delay: 85ms; }
-.perfect-guess-overlay-particle:nth-child(21) { left: 78%; animation-delay: 28ms; }
-.perfect-guess-overlay-particle:nth-child(22) { left: 81%; animation-delay: 105ms; }
-.perfect-guess-overlay-particle:nth-child(23) { left: 84%; animation-delay: 60ms; }
-.perfect-guess-overlay-particle:nth-child(24) { left: 87%; animation-delay: 18ms; }
-.perfect-guess-overlay-particle:nth-child(25) { left: 90%; animation-delay: 98ms; }
-.perfect-guess-overlay-particle:nth-child(26) { left: 93%; animation-delay: 42ms; }
-.perfect-guess-overlay-particle:nth-child(27) { left: 96%; animation-delay: 76ms; }
-.perfect-guess-overlay-particle:nth-child(28) { left: 99%; animation-delay: 12ms; }
-.perfect-guess-overlay-particle:nth-child(29) { left: 5%; animation-delay: 130ms; }
-.perfect-guess-overlay-particle:nth-child(30) { left: 25%; animation-delay: 140ms; }
-.perfect-guess-overlay-particle:nth-child(31) { left: 45%; animation-delay: 150ms; }
-.perfect-guess-overlay-particle:nth-child(32) { left: 65%; animation-delay: 160ms; }
-.perfect-guess-overlay-particle:nth-child(33) { left: 85%; animation-delay: 170ms; }
-.perfect-guess-overlay-particle:nth-child(34) { left: 35%; animation-delay: 180ms; }
-.perfect-guess-overlay-particle:nth-child(35) { left: 55%; animation-delay: 190ms; }
-.perfect-guess-overlay-particle:nth-child(36) { left: 75%; animation-delay: 200ms; }
+.perfect-guess-particle:nth-child(1) { left: 7%; animation-delay: 20ms; }
+.perfect-guess-particle:nth-child(2) { left: 13%; animation-delay: 60ms; }
+.perfect-guess-particle:nth-child(3) { left: 20%; animation-delay: 10ms; }
+.perfect-guess-particle:nth-child(4) { left: 27%; animation-delay: 95ms; }
+.perfect-guess-particle:nth-child(5) { left: 34%; animation-delay: 35ms; }
+.perfect-guess-particle:nth-child(6) { left: 41%; animation-delay: 120ms; }
+.perfect-guess-particle:nth-child(7) { left: 48%; animation-delay: 50ms; }
+.perfect-guess-particle:nth-child(8) { left: 55%; animation-delay: 140ms; }
+.perfect-guess-particle:nth-child(9) { left: 62%; animation-delay: 45ms; }
+.perfect-guess-particle:nth-child(10) { left: 69%; animation-delay: 100ms; }
+.perfect-guess-particle:nth-child(11) { left: 76%; animation-delay: 25ms; }
+.perfect-guess-particle:nth-child(12) { left: 83%; animation-delay: 130ms; }
+.perfect-guess-particle:nth-child(13) { left: 90%; animation-delay: 65ms; }
+.perfect-guess-particle:nth-child(14) { left: 95%; animation-delay: 150ms; }
 
 .copy-note {
   color: #9b0000;
@@ -478,13 +429,7 @@ button:disabled {
     padding: 0.55rem 0.65rem;
   }
 
-  .perfect-guess-overlay-banner {
-    letter-spacing: 0.07em;
-    width: min(92vw, 520px);
-  }
-
-  .gb-header-subtitle {
-    letter-spacing: 0.1em;
-    font-size: 0.7rem;
+  .perfect-guess-banner {
+    letter-spacing: 0.06em;
   }
 }
