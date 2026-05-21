@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 const userMarkerIcon = L.divIcon({
   className: "custom-marker-wrapper",
-  html: '<div class="custom-marker custom-marker-user"><span>You</span></div>',
-  iconSize: [56, 56],
-  iconAnchor: [28, 28],
+  html: '<div style="width:44px;height:44px;border-radius:999px;background:#fff;border:4px solid #C5050C;box-shadow:0 2px 10px rgba(0,0,0,.28);"></div>',
+  iconSize: [44, 44],
+  iconAnchor: [22, 22],
 });
 
 const answerMarkerIcon = L.divIcon({
@@ -18,12 +18,19 @@ const answerMarkerIcon = L.divIcon({
   iconAnchor: [32, 32],
 });
 
+type QuizMapProps = {
+  guess: { lat: number; lng: number } | null;
+  answer: { lat: number; lng: number } | null;
+  onGuess: (lat: number, lng: number) => void;
+  revealAnswer: boolean;
+};
+
 type MapClickHandlerProps = {
   onPick: (lat: number, lng: number) => void;
   revealAnswer: boolean;
 };
 
-function LockedMapClickHandler({ onPick, revealAnswer }: LockedMapClickHandlerProps) {
+function LockedMapClickHandler({ onPick, revealAnswer }: MapClickHandlerProps) {
   useMapEvents({
     click(event) {
       if (revealAnswer) return;
@@ -63,7 +70,7 @@ export default function QuizMap({ guess, answer, onGuess, revealAnswer }: QuizMa
   return (
     <MapContainer center={MADISON_CENTER} zoom={14} scrollWheelZoom style={{ height: "50vh", minHeight: 320, width: "100%" }}>
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <MapClickHandler onPick={onGuess} />
+      <LockedMapClickHandler onPick={onGuess} revealAnswer={revealAnswer} />
       {guess && <Marker position={[guess.lat, guess.lng]} icon={userMarkerIcon} />}
       {revealAnswer && answer && <Marker position={[answer.lat, answer.lng]} icon={answerMarkerIcon} />}
       {revealAnswer && guess && answer && (
