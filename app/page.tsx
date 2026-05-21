@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { questions } from "@/data/questions";
 
 const QuizMap = dynamic(() => import("@/components/QuizMap"), {
@@ -68,6 +68,13 @@ function formatDistance(distanceMeters: number): string {
   return `${miles.toFixed(2)} mi`;
 }
 
+function getFinalRating(score: number): string {
+  if (score >= 4500) return "True Badger";
+  if (score >= 3500) return "Madison Native";
+  if (score >= 2500) return "Campus Regular";
+  return "Freshman Orientation";
+}
+
 function GeoBadgerTitle() {
   return (
     <h1 className="game-title" aria-label="GeoBadger">
@@ -83,6 +90,7 @@ export default function Home() {
   const [results, setResults] = useState<RoundResult[]>([]);
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [animatedTotalScore, setAnimatedTotalScore] = useState(0);
 
   const currentQuestion = questions[index];
   const isComplete = index >= questions.length;
@@ -91,6 +99,32 @@ export default function Home() {
     () => results.reduce((sum, result) => sum + result.points, 0),
     [results],
   );
+  const finalRating = useMemo(() => getFinalRating(totalScore), [totalScore]);
+
+  useEffect(() => {
+    if (!isComplete) {
+      setAnimatedTotalScore(0);
+      return;
+    }
+
+    let animationFrameId = 0;
+    const durationMs = 1200;
+    const startTime = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / durationMs);
+      const easedProgress = 1 - (1 - progress) * (1 - progress);
+      setAnimatedTotalScore(Math.round(totalScore * easedProgress));
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isComplete, totalScore]);
 
   const handleSubmit = () => {
     if (!guess || !currentQuestion) return;
@@ -152,7 +186,11 @@ export default function Home() {
       <main className="page">
         <section className="card final-card">
           <h1 className="final-title">🎉 UW–Madison Geo Quiz Complete!</h1>
-          <h2 className="final-score">Final Score: {totalScore} / 5000</h2>
+          <div className="final-score-panel">
+            <p className="final-score-label">Final Score</p>
+            <h2 className="final-score">{animatedTotalScore.toLocaleString()} / 5000</h2>
+            <p className="final-rating">{finalRating}</p>
+          </div>
           <ul>
             {results.map((result, i) => (
               <li key={`${result.answerLabel}-${i}`}>
