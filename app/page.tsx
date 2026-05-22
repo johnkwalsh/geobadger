@@ -128,6 +128,7 @@ export default function Home() {
     pickRandomQuestions(questions, GAME_QUESTION_COUNT),
   );
   const [index, setIndex] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const [guess, setGuess] = useState<Guess | null>(null);
   const [results, setResults] = useState<RoundResult[]>([]);
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
@@ -213,6 +214,7 @@ export default function Home() {
   const handleReset = () => {
     setSelectedQuestions(pickRandomQuestions(questions, GAME_QUESTION_COUNT));
     setIndex(0);
+    setHasStarted(false);
     setGuess(null);
     setResults([]);
     setRoundResult(null);
