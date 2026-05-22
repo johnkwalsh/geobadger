@@ -144,6 +144,7 @@ export default function Home() {
     [results],
   );
   const finalRating = useMemo(() => getFinalRating(totalScore), [totalScore]);
+  const finalGrade = useMemo(() => getLetterGrade(totalScore), [totalScore]);
 
   useEffect(() => {
     if (!isComplete) {
@@ -247,6 +248,7 @@ export default function Home() {
           <div className="final-score-panel">
             <p className="final-score-label">Final Score</p>
             <h2 className="final-score">{animatedTotalScore.toLocaleString()} / 5000</h2>
+            <p className="final-grade">{finalGrade}</p>
             <p className="final-rating">{finalRating}</p>
           </div>
           <ul>

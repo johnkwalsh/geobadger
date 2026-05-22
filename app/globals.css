@@ -406,11 +406,26 @@ button:disabled {
   line-height: 1.05;
 }
 
+.final-grade {
+  margin: 0.35rem 0 0.15rem;
+  color: #9b0000;
+  font-size: clamp(2rem, 9vw, 3.15rem);
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
 .final-rating {
-  margin: 0.45rem 0 0;
+  margin: 0.1rem 0 0;
   color: #1f1f1f;
-  font-size: clamp(1rem, 3.6vw, 1.28rem);
-  font-weight: 800;
+  font-size: clamp(0.95rem, 3.2vw, 1.12rem);
+  font-weight: 700;
+}
+
+.leaflet-container {
+  border-radius: 14px;
+  border: 2px solid #9b0000;
+  box-shadow: 0 8px 20px rgba(66, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 .leaflet-container {
