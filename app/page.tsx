@@ -119,17 +119,16 @@ function GeoBadgerTitle() {
         <span className="game-title-geo">GEO</span>
         <span className="game-title-badger">BADGER</span>
       </h1>
-      <p className="gb-header-subtitle">UW Campus Edition</p>
     </header>
   );
 }
 
 export default function Home() {
-  const [hasStarted, setHasStarted] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState(() =>
     pickRandomQuestions(questions, GAME_QUESTION_COUNT),
   );
   const [index, setIndex] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const [guess, setGuess] = useState<Guess | null>(null);
   const [results, setResults] = useState<RoundResult[]>([]);
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
@@ -213,9 +212,9 @@ export default function Home() {
   };
 
   const handleReset = () => {
-    setHasStarted(false);
     setSelectedQuestions(pickRandomQuestions(questions, GAME_QUESTION_COUNT));
     setIndex(0);
+    setHasStarted(false);
     setGuess(null);
     setResults([]);
     setRoundResult(null);
@@ -270,10 +269,10 @@ export default function Home() {
   if (!hasStarted) {
     return (
       <main className="page">
-        <section className="card intro-card intro-hero">
+        <section className="card intro-card">
           <GeoBadgerTitle />
-          <p className="intro-subtitle">Test your UW–Madison geography knowledge.</p>
-          <p className="intro-helper">5 questions. Click the map. Get as close as you can.</p>
+          <p className="intro-tag">Test your UW–Madison knowledge.</p>
+          <p className="intro-copy">5 questions. Click the map. Get as close as you can.</p>
           <div className="actions">
             <button onClick={() => setHasStarted(true)}>Start Game</button>
           </div>
@@ -306,6 +305,16 @@ export default function Home() {
           </div>
         ) : (
           <div className="result">
+            {roundResult.points === 1000 && (
+              <div className="perfect-guess" role="status" aria-live="polite">
+                <div className="perfect-guess-confetti" aria-hidden="true">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <span key={i} className="perfect-guess-particle" />
+                  ))}
+                </div>
+                <p className="perfect-guess-banner">PERFECT GUESS</p>
+              </div>
+            )}
             <p><strong>Correct location:</strong> {roundResult.answerLabel}</p>
             <p>
               <strong>Your guess:</strong> {roundResult.guess.lat.toFixed(5)}, {roundResult.guess.lng.toFixed(5)}

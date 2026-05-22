@@ -25,8 +25,8 @@ export const questions: QuizQuestion[] = [
   {
     prompt: "Barry Alvarez coached his first game as Wisconsin head coach here.",
     answerLabel: "Camp Randall Stadium",
-    lat: 43.0699,
-    lng: -89.4128,
+    lat: 43.07000,
+    lng: -89.41278,
     polygon: [
       { lat: 43.07052, lng: -89.41412 },
       { lat: 43.07085, lng: -89.41331 },
