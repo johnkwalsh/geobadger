@@ -21,6 +21,17 @@ type RoundResult = {
 };
 
 const EARTH_RADIUS_METERS = 6371000;
+const GAME_QUESTION_COUNT = 5;
+
+function pickRandomQuestions<T>(pool: T[], count: number): T[] {
+  const shuffled = [...pool];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
 
 function haversineMeters(a: Guess, b: Guess): number {
   const toRadians = (deg: number) => (deg * Math.PI) / 180;
@@ -37,9 +48,31 @@ function haversineMeters(a: Guess, b: Guess): number {
 }
 
 function scoreFromDistance(distanceMeters: number): number {
-  const maxDistanceForPoints = 6000;
-  const normalized = Math.max(0, 1 - distanceMeters / maxDistanceForPoints);
-  return Math.round(normalized * 1000);
+  const distanceFeet = distanceMeters * 3.28084;
+
+  if (distanceFeet <= 100) return 1000;
+  if (distanceFeet <= 250) {
+    const progress = (distanceFeet - 100) / 150;
+    return Math.round(999 - progress * 99);
+  }
+  if (distanceFeet <= 500) {
+    const progress = (distanceFeet - 250) / 250;
+    return Math.round(899 - progress * 149);
+  }
+  if (distanceFeet <= 1000) {
+    const progress = (distanceFeet - 500) / 500;
+    return Math.round(749 - progress * 249);
+  }
+  if (distanceFeet <= 2000) {
+    const progress = (distanceFeet - 1000) / 1000;
+    return Math.round(499 - progress * 249);
+  }
+
+  const maxDistanceForPointsFeet = 4000;
+  if (distanceFeet >= maxDistanceForPointsFeet) return 0;
+
+  const progress = (distanceFeet - 2000) / (maxDistanceForPointsFeet - 2000);
+  return Math.round(249 - progress * 249);
 }
 
 function isPointInPolygon(point: Guess, polygon: Guess[]): boolean {
@@ -72,35 +105,53 @@ function formatDistance(distanceMeters: number): string {
 function getFinalRating(score: number): string {
   if (score >= 4500) return "True Badger";
   if (score >= 3500) return "Madison Native";
-  if (score >= 2500) return "Campus Regular";
-  return "Freshman Orientation";
+  return "Lost Freshman";
+}
+
+function getLetterGrade(score: number): string {
+  if (score >= 4500) return "A+";
+  if (score >= 3500) return "B+";
+  return "F";
 }
 
 function GeoBadgerTitle() {
   return (
-    <h1 className="game-title" aria-label="GeoBadger">
-      <span className="game-title-geo">GEO</span>
-      <span className="game-title-badger">BADGER</span>
-    </h1>
+    <header className="gb-header" aria-label="GeoBadger">
+      <svg className="gb-header-pin" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 6c-11.1 0-20 8.8-20 19.7C12 39.5 30.1 56 32 58c1.9-2 20-18.5 20-32.3C52 14.8 43.1 6 32 6Z" />
+        <circle cx="32" cy="26" r="8.2" />
+      </svg>
+      <h1 className="game-title">
+        <span className="game-title-geo">GEO</span>
+        <span className="game-title-badger">BADGER</span>
+      </h1>
+      <p className="gb-header-subtitle">UW Campus Edition</p>
+    </header>
   );
 }
 
 export default function Home() {
+  const [hasStarted, setHasStarted] = useState(false);
+  const [selectedQuestions, setSelectedQuestions] = useState(() =>
+    pickRandomQuestions(questions, GAME_QUESTION_COUNT),
+  );
   const [index, setIndex] = useState(0);
   const [guess, setGuess] = useState<Guess | null>(null);
   const [results, setResults] = useState<RoundResult[]>([]);
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [animatedTotalScore, setAnimatedTotalScore] = useState(0);
+  const [showPerfectOverlay, setShowPerfectOverlay] = useState(false);
 
-  const currentQuestion = questions[index];
-  const isComplete = index >= questions.length;
+  const currentQuestion = selectedQuestions[index];
+  const isComplete = index >= selectedQuestions.length;
 
   const totalScore = useMemo(
     () => results.reduce((sum, result) => sum + result.points, 0),
     [results],
   );
   const finalRating = useMemo(() => getFinalRating(totalScore), [totalScore]);
+  const finalGrade = useMemo(() => getLetterGrade(totalScore), [totalScore]);
 
   useEffect(() => {
     if (!isComplete) {
@@ -126,6 +177,17 @@ export default function Home() {
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
   }, [isComplete, totalScore]);
+
+  useEffect(() => {
+    if (roundResult?.points !== 1000) return;
+
+    setShowPerfectOverlay(true);
+    const timeoutId = window.setTimeout(() => {
+      setShowPerfectOverlay(false);
+    }, 1600);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [roundResult]);
 
   const handleSubmit = () => {
     if (!guess || !currentQuestion) return;
@@ -158,6 +220,8 @@ export default function Home() {
   };
 
   const handleReset = () => {
+    setHasStarted(false);
+    setSelectedQuestions(pickRandomQuestions(questions, GAME_QUESTION_COUNT));
     setIndex(0);
     setGuess(null);
     setResults([]);
@@ -176,6 +240,7 @@ export default function Home() {
 
     const lines = [
       `GeoBadger ${totalScore}/5000`,
+      finalRating,
       scoreEmojiLine,
     ];
     await navigator.clipboard.writeText(lines.join("\n"));
@@ -190,6 +255,7 @@ export default function Home() {
           <div className="final-score-panel">
             <p className="final-score-label">Final Score</p>
             <h2 className="final-score">{animatedTotalScore.toLocaleString()} / 5000</h2>
+            <p className="final-grade">{finalGrade}</p>
             <p className="final-rating">{finalRating}</p>
           </div>
           <ul>
@@ -209,12 +275,27 @@ export default function Home() {
     );
   }
 
+  if (!hasStarted) {
+    return (
+      <main className="page">
+        <section className="card intro-card intro-hero">
+          <GeoBadgerTitle />
+          <p className="intro-subtitle">Test your UW–Madison geography knowledge.</p>
+          <p className="intro-helper">5 questions. Click the map. Get as close as you can.</p>
+          <div className="actions">
+            <button onClick={() => setHasStarted(true)}>Start Game</button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="page">
       <section className="card">
         <GeoBadgerTitle />
         <p className="question-count">
-          Question {index + 1} of {questions.length}
+          Question {index + 1} of {selectedQuestions.length}
         </p>
         <h2>{currentQuestion.prompt}</h2>
 
@@ -237,12 +318,23 @@ export default function Home() {
             <p>
               <strong>Your guess:</strong> {roundResult.guess.lat.toFixed(5)}, {roundResult.guess.lng.toFixed(5)}
             </p>
-            <div className="result-stats">
+            <div className={`result-stats ${roundResult.points === 1000 ? "result-stats-perfect" : ""}`}>
               <p><strong>Distance:</strong> {formatDistance(roundResult.distanceMeters)}</p>
               <p><strong>Points:</strong> {roundResult.points} / 1000</p>
               {roundResult.insideCorrectArea && <p><strong>Inside correct area</strong></p>}
             </div>
             <button onClick={handleNext}>Next question</button>
+          </div>
+        )}
+
+        {showPerfectOverlay && (
+          <div className="perfect-guess-overlay" role="status" aria-live="polite">
+            <div className="perfect-guess-overlay-confetti" aria-hidden="true">
+              {Array.from({ length: 36 }).map((_, i) => (
+                <span key={i} className="perfect-guess-overlay-particle" />
+              ))}
+            </div>
+            <p className="perfect-guess-overlay-banner">PERFECT GUESS</p>
           </div>
         )}
       </section>
