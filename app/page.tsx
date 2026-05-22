@@ -108,6 +108,12 @@ function getFinalRating(score: number): string {
   return "Lost Freshman";
 }
 
+function getLetterGrade(score: number): string {
+  if (score >= 4500) return "A+";
+  if (score >= 3500) return "B+";
+  return "F";
+}
+
 function GeoBadgerTitle() {
   return (
     <header className="gb-header" aria-label="GeoBadger">
