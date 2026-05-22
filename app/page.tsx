@@ -271,7 +271,7 @@ export default function Home() {
       <main className="page">
         <section className="card intro-card">
           <GeoBadgerTitle />
-          <p className="intro-tag">Test your UW–Madison geography knowledge.</p>
+          <p className="intro-tag">Test your UW–Madison knowledge.</p>
           <p className="intro-copy">5 questions. Click the map. Get as close as you can.</p>
           <div className="actions">
             <button onClick={() => setHasStarted(true)}>Start Game</button>
