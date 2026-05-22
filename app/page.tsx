@@ -264,6 +264,26 @@ export default function Home() {
     );
   }
 
+  if (!hasStarted) {
+    return (
+      <main className="page">
+        <section className="card intro-card">
+          <GeoBadgerTitle />
+          <p className="intro-tag">Campus Guessing Challenge</p>
+          <h2>How to play</h2>
+          <ul className="intro-list">
+            <li>You will get 5 UW–Madison location prompts per game.</li>
+            <li>Click the map where you think each location is.</li>
+            <li>Closer guesses earn more points, up to 1000 each.</li>
+          </ul>
+          <div className="actions">
+            <button onClick={() => setHasStarted(true)}>Start Game</button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="page">
       <section className="card">

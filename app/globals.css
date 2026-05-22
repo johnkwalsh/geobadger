@@ -112,6 +112,30 @@ body {
   border-width: 3px;
 }
 
+.intro-card {
+  max-width: 700px;
+}
+
+.intro-tag {
+  margin: 0.2rem 0 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9b0000;
+  font-size: 0.78rem;
+}
+
+.intro-list {
+  margin: 0.5rem 0 0.3rem;
+  padding-left: 1.15rem;
+}
+
+.intro-list li {
+  margin: 0.4rem 0;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
 h1,
 h2 {
   color: #9b0000;
